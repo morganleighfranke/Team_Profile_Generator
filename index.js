@@ -1,10 +1,9 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generate = require("./generateHtml");
 const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
-const { inheritInnerComments } = require('@babel/types');
+const generateHtml = require('./generateHtml');
 
 const teamMembers = [];
 
@@ -31,14 +30,14 @@ const promptManager = () =>
       message: 'What is the managers office number?',
     },
 
-//once make a new intern pass all info to an array
-//pass all array info to html to generate
+    //once make a new intern pass all info to an array
+    //pass all array info to html to generate
 
   ]).then((data) => {
     //make a new instance of manager
     const newManager = new Manager(data.name, data.id, data.email, data.officeNumber);
     //add mgr to a list of employees
-    teamMembers.push(newManager); 
+    teamMembers.push(newManager);
     //calls a function that takes us to prompt for the rest of the team
     createTeamMembers();
 
@@ -47,15 +46,15 @@ const promptManager = () =>
 const createTeamMembers = () => {
   inquirer.prompt([
     {
-        type: 'list',
-        name: 'teamMembers',
-        message: 'Which types of team member would you like to add?',
-        choices: ['Engineer', 'Intern', 'Done adding employees'],
-      },
-  ]) .then((data) => {
+      type: 'list',
+      name: 'teamMembers',
+      message: 'Which types of team member would you like to add?',
+      choices: ['Engineer', 'Intern', 'Done adding employees'],
+    },
+  ]).then((data) => {
     //if engineer then ask these questions
     const choice = data.teamMembers;
-    switch(choice){
+    switch (choice) {
       case 'Engineer':
         return engineerQuestions();
       case 'Intern':
@@ -63,10 +62,10 @@ const createTeamMembers = () => {
       case 'Done adding employees':
         return fs.writeFileSync('teamMembers.html', generateHtml(teamMembers));
         ;
-      };
-    })
-  }
-  
+    };
+  })
+}
+
 
 const engineerQuestions = () => {
   inquirer.prompt([
@@ -96,7 +95,7 @@ const engineerQuestions = () => {
     //add engineer to a list of employees
     teamMembers.push(newEngineer);
     createTeamMembers();
-})
+  })
 };
 
 const internQuestions = () => {
@@ -122,37 +121,41 @@ const internQuestions = () => {
       message: 'What is the Interns school?',
     },
   ])
-  .then((data) => {
-    //make a new instance of manager
-    const newIntern = new Intern(data.name, data.id, data.email, data.school);
-    //add engineer to a list of employees
-    teamMembers.push(newIntern);
-    createTeamMembers();
-    //console.log(teamMembers);
-})
+    .then((data) => {
+      //make a new instance of manager
+      const newIntern = new Intern(data.name, data.id, data.email, data.school);
+      //add engineer to a list of employees
+      teamMembers.push(newIntern);
+      createTeamMembers();
+      //console.log(teamMembers);
+    })
 
 };
 
+// const generateHtml = (teamMembers) => {
+//   const teamObject = teamMembers;
 
-const generateHtml = (teamMembers) => {
-  return `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-      <title>Document</title>
-    </head>
-    <body>
-      <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-      <p>${teamMembers}</p>
+//   //build out the html to look how you want it to using bootstrap
+//   console.log(teamObject);
+//   return `<!DOCTYPE html>
+//     <html lang="en">
+//     <head>
+//       <meta charset="UTF-8">
+//       <meta http-equiv="X-UA-Compatible" content="ie=edge">
+//       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+//       <title>Team Profile</title>
+//     </head>
+//     <body>
+//     <div class="jumbotron jumbotron-fluid">
+//       <div class="container">
+//         <h1 class="display-4">Team Profile</h1>
+//       </div>
+//     </div>
        
-      </div>
-    </div>
-    </body>
-    </html>`;
-}
+
+//     </body>
+//     </html>`;
+// }
 
 
 promptManager();
