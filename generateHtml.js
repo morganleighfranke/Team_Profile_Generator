@@ -1,6 +1,7 @@
-function generateHtml(data) {
-   return
-    `<!DOCTYPE html>
+
+
+const generateHtml = (data) => {
+  return `<!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8">
@@ -18,5 +19,4 @@ function generateHtml(data) {
     </body>
     </html>`;
 }
-
 module.exports = generateHtml;
