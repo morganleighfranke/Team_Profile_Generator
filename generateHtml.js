@@ -64,7 +64,7 @@ module.exports = team => {
        </div>
     </div>
 
-  <div style="margin-top: 50px; margin-side: 50px;">
+  <div style="margin: 0px 50px 0 50px;">
       <div class="row">
       ${generateHtml(team)}
       </div>
