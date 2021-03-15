@@ -3,7 +3,7 @@ const fs = require('fs');
 const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
-const generateHtml = require('./generateHtml');
+const team = require('./generateHtml');
 
 const teamMembers = [];
 
@@ -26,7 +26,7 @@ const promptManager = () =>
     },
     {
       type: 'input',
-      name: 'office-number',
+      name: 'officeNumber',
       message: 'What is the managers office number?',
     },
 
@@ -60,7 +60,7 @@ const createTeamMembers = () => {
       case 'Intern':
         return internQuestions();
       case 'Done adding employees':
-        return fs.writeFileSync('teamMembers.html', generateHtml(teamMembers));
+        return fs.writeFileSync('teamMembers.html', team(teamMembers));
         ;
     };
   })
