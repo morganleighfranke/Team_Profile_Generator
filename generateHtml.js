@@ -60,7 +60,7 @@ module.exports = team => {
 <body>
 <div class="jumbotron jumbotron-fluid">
        <div class="container">
-         <h1 class="display-4">Team Profile</h1>
+         <h1 class="display-4" style="text-align: center";>Team Profile</h1>
        </div>
     </div>
 
